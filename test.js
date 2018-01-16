@@ -1,8 +1,8 @@
 "use strict";
 
-var validator = require("./index");
+const validator = require("./index");
 
-var validSupported =
+const validSupported =
 [
 	"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ@letters-in-local.org",
 	"01234567890@numbers-in-local.net",
@@ -28,7 +28,7 @@ var validSupported =
 	"digit-only-domain-with-subdomain@sub.123.com"
 ];
 
-var validUnsupported =
+const validUnsupported =
 [
 	"\"quoted\"@sld.com",
 	"\"\\e\\s\\c\\a\\p\\e\\d\"@sld.com",
@@ -39,7 +39,7 @@ var validUnsupported =
 	"bracketed-IP-instead-of-domain@[127.0.0.1]"
 ];
 
-var invalidSupported =
+const invalidSupported =
 [
 	"@missing-local.org",
 	"! #$%`|@invalid-characters-in-local.org",
@@ -70,20 +70,22 @@ var invalidSupported =
 	"mg@ns.i"
 ];
 
+const logger = email => console.log(`    ${validator.validate(email) ? "VALID" : "INVALID"} : ${email}`);
+
 console.log('SYNC VERSION TESTS')
 console.log('=====================')
 console.log("SUPPORTED BY MODULE:\n");
 
 console.log("SHOULD BE VALID:");
-validSupported.forEach(function(email) { console.log("%s : %s", validator.validate(email) ? "    VALID" : "  INVALID", email); });
+validSupported.forEach(logger);
 
 console.log("\nSHOULD BE INVALID:");
-invalidSupported.forEach(function(email) { console.log("%s : %s", validator.validate(email) ? "    VALID" : "  INVALID", email); });
+invalidSupported.forEach(logger);
 
 console.log("\n\nNOT SUPPORTED BY MODULE:\n");
 
 console.log("SHOULD BE VALID:");
-validUnsupported.forEach(function(email) { console.log("%s : %s", validator.validate(email) ? "    VALID" : "  INVALID", email); });
+validUnsupported.forEach(logger);
 
 
 process.exit(0);
